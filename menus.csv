@@ -1,0 +1,30 @@
+chef_id,menu_id,item_pic,item_name,price,rating,item_description
+C2,1,Tacos de Bistec.jpg,Taco de Bistec (Steak),14,2,Tacos de Bistec are simply steak tacos! Perfect for anytime of the day
+C2,2,Tacos de Pollo.jpg,Taco de Pollo (Chicken),11,4,Tacos de Pollo are simply chicken tacos! Perfect for anytime of the day
+C2,3,Tacos de Chorizo.jpg,Taco de Chorizo (Sausage),9,5,Tacos de Chorizo are tacos with mexican sausage. The perfect amount of spiceness complemented by freshly chopped onion and celantro
+C2,4,Tacos de Cecina.jpg,Taco de Cecina (Jerky Style Beef),13,5,Tacos de Cecina are similar to steak tacos, but the meat is jerky styled beef
+C2,5,Tacos de Carnitas.jpg,Taco de Carnita (Deep Fried Pork),9,3,Tacos de Carnitas are Pork Tacos which come with an extra kick of spicyness
+C2,6,Tacos de Lengua.jpg,Taco de Lenuga (Beef Tounge),12,4,Tacos de Lengua are Tongue Tacos, very delicious
+C2,7,Torta de Queso Blanco.jpg,Tortas de Queso Blanco (Fresh White Cheese),5,3,Torta de Queso Blano, is basically a grilled cheese, but with avacado beans and jalapeno!
+C2,8,Torta de Milanesa.jpg,Tortas de Milanesa (Breaded Steak),15,4,Torta de Milanesa, is sandwich with chicken milanese
+C2,9,Torta de Jamon.jpg,Tortas de Jamon (Ham),11,4,Torta de Jamon, is a Ham sandwich,
+C2,10,Torta de Carne Enchilada.jpg,Tortas de Carne Enchilada (Hot and Spicy Pork),14,4,Torta de Carne Enchilada is a sandwich with a slice of spicy pork! A great lunch option
+C3,1,Lobster Ceviche.jpg,Lobster Ceviche,24,2,A delicious South American dish of marinated lobster and shrimp
+C3,2,Yelllow Tail Sashimi.jpg,Yellowtail Sashimi with Dry Miso and Yuza Sauce,24,2,Bite-sized pieces of raw yellow tail eaaten with soy sauce and wasabi paste
+C3,3,Shiromi Usuzukari.jpg,Shiromi Usuzukari,9,4,Thinly sliced fish is amazing, dipped in ponzu sauce with a bit of green onion
+C3,4,Bigeye Tuna Tataki.jpg,Bigeye Tuna Tataki with Tosazu,19,4,This dish consists of fish steak, served slightly raw
+C3,5,Sea Urchin Tempura.jpg,sea Urchin Tempura,9,4, Sea Urchin that has been battered and deep fried
+C3,6,Rock Shrimp Tempura.jpg,Rock Shrimp Tempura with Ponzu,11,5, Rock Shrimp that has been battered and deep fried
+C3,7,Chilean Sea Bass.jpg,Chilean Sea Bass with Black Bean Sause,24,5, Sea Bass broiled to perfection served with a cup of rice
+C3,8,Lobster with Wasabi.jpg,Lobster with Wasabi Pepper Sause,28,5, Perfectly boiled Lobster served with wasabi paste
+C3,9,Kaki Age Donburi.jpg,Kaki Age Donburi,16,4,Perfect for lunch, this meal is a rice bowl with vegetables
+C3,10,Tempura Donburi.jpg,Tempura Donburi,14,4,Donburi that has been battered and deep fried
+C3,11,Ribeye Anticucho.jpg,Ribeye Anticucho,21,3,Ribeye cooked to your liking served in thin slices with antichucho sauce
+C4,1,Pechuga de Pollo a la parrilla.jpg,Pechuga De Pollo A La Parrilla (Grilled Chicken Cutlet),12,4,Grilled Chicken Breast with a side of rice and beans
+C4,2,Milanesa De res.jpg,Milanesa De Res (Breaded Steak),15,4, Beef Milanese served with rice
+C4,3,Carne de Enchilada.jpg,Carne Enchilada (Hot and Spicy Pork),14,4,Slice of pork with a spicy paste served with rice
+C4,4,Medio Pollo Rostizado.jpg,Medio Pollo Rostizado (Half Roasted Chicken),12,4,Half of Rotisserie Chicken served with plantains rice and beans
+C4,5,Pernil Horneado.jpg,Pernil Horneado (Roasted Pork),14,4,Roasted Pork with spicy sauce
+C4,6,Bistec Encebollado.jpg,Bistec Encebollado (Steak with Onions),17,3,Steak served with a side of spicy sauce and rice
+C4,7,Carne de Cecina.jpg,Carne De Cecina (Jerky Beef Steak),13,5,Jerky Styled Beef with a side salad and rice
+C4,8,Mole Poblano.jpg,Mole Poblano (Chicken with Mole),15,5,Chicken served with Mole sauce, which is chocolate based, and sprinkled with sunflower seeds
