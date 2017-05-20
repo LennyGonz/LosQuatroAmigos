@@ -7,5 +7,5 @@ To run:
 - cd into directory
 - run.py
 
-* must create a virtual environment
+* must create a virtual environment to successfully run the program
 * install geopy -- python-gmaps -- wtf -- WTforms -- FlaskWTF -- Flask-Bootstrap
