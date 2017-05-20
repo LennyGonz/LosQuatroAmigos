@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+      <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <title>User Account</title>
+    
+        <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+          <style>
+              body
+              {
+                  background-color: #F5F0EC;
+              }
+              .Warnings
+              {
+                 padding-top: 8px;
+              }
+          </style>
+      </head>
+
+      <body>
+
+            <h1> Los Quatro Amigos</h1> <h4>Hello! {{ session['user'] }}</h4>
+    
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <nav class="navbar navbar-default" role="navigation">
+                            <div class="navbar-header">
+                
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                     <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                                </button> <a class="navbar-brand" href="#">LQA</a>
+                            </div>
+                
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav">
+                                    <li class="active">
+                                        <a href="{{ url_for('index') }}">HOME</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('showMenu') }}">MENU</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('show_ratings')}}">RATE FOOD</a>
+                                    </li>
+                                    <li>
+                                        <a href="#top_dishes">TOP DISHES</a>
+                                    </li>
+
+                                    <li>
+                                        <form class="navbar-form navbar-left" role="search" action={{ url_for('logout') }}>
+                                            <!-- <div class="form-group">
+                                                <input type="text" class="form-control">
+                                             </div> -->
+                                            <button type="submit" class="btn btn-default">
+                                                Sign Out
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                                <form class="navbar-form navbar-left" role="search">
+                                    <div class="form-group">
+
+                                        <div class="Warnings">
+                                        <span class="glyphicon glyphicon-warning-sign"></span> {{ warnings[0] }}
+                                        </div>
+                                    </div>
+                                </form>
+                                <ul class="nav navbar-nav">
+                                    <li>
+                                        <a href="{{url_for('show_compliment_form')}}">COMPLIMENT</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{url_for('show_complaint_form')}}">COMPLAIN</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{('delete_account')}}">Delete Account</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+                <!-- End of Navigation bar -->
+
+                <!-- Beginning of small description -->
+                    <div class="row">
+                        <div class="col-md-12">
+                        <div><font color="red">
+                 {% with messages = get_flashed_messages() %}
+             {% if messages %}
+                 {% for message in messages %}
+                     <b>{{ message }} </b>
+                 {% endfor %}
+             {% endif %}
+         {% endwith %}
+                        </font></div>
+
+                            <h3 class="text-center">
+                                Deposit Money
+                            </h3>
+                        <table class="table-condensed" width="50%">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Current Funds: ${{ user_info[13] }}
+                                        </th>
+
+                                    </tr>
+
+                                    <tr>
+
+                                        <td>
+                                            <form action="{{ url_for('deposit_money') }}" method="POST">
+                                                <input type="number" class="input_form_sign d_block active_inp" placeholder="$" name="money" autocomplete="off">
+                                            <button type="submit" class="btn btn-default">
+                                                  Deposit Money
+                                              </button>
+                                            </form>
+                                        </td>
+
+                                    </tr>
+                                </thead>
+                        </table>
+
+
+                            <h3 class="text-center">
+                                Order History
+                            </h3>
+                
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Order ID
+                                        </th>
+                                        <th>
+                                            Menu Item
+                                        </th>
+                                        <th>
+                                            Total($)
+                                        </th>
+                                        <th>
+                                            Status
+                                        </th>
+                                        <th>
+                                            Rate Delivery
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {% for order in orders  %}
+                                    <tr>
+                                        <td>
+                                            {{ order[0] }}
+                                        </td>
+                                        <td>
+                                            {{ order[2] }}
+                                        </td>
+                                        <td>
+                                            {{ order[3] }}
+                                        </td>
+                                        <td>
+                                            {% if order[4] == "0" %}
+                                            Processed
+                                            {% else %}
+                                            Delivered
+                                            {% endif %}
+
+                                        </td>
+                                        <td>
+                                            <form method = "post" action= {{url_for('delivery_rating', order_id = order[0])}}>
+                                                <input type="text" name="delivery_rating" min="0" max ="5">
+                                                <input type="submit" value="rate">
+                                            </form>
+
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                        </div>
+                    </div>
+            </div>
+    
+            <header id="top_dishes">
+                        <h2>Top Dishes</h2>
+                        <hr class="small">
+                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                                    <!-- Indicators-->
+                        <ol class="carousel-indicators">
+                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                            <li data-target="#myCarousel" data-slide-to="1"></li>
+                            <li data-target="#myCarousel" data-slide-to="2"></li>
+                            <li data-target="#myCarousel" data-slide-to="3"></li>
+                            <li data-target="#myCarousel" data-slide-to="4"></li>
+                        </ol>
+                
+                        <!-- Wrapper for slides-->
+                        <div class="carousel-inner" >
+                            <div class="item active">
+                                <img src="{{ url_for('static', filename='img/foodimages/{}'.format(top_five[0][1])) }} " alt="Pic 1" style="width: 100%">
+                                <div class="carousel-caption">
+                                    <h3>{{ top_five[0][0] }}</h3>
+                                </div>
+                            </div>
+                
+                            <div class="item">
+                                <img src="{{ url_for('static', filename='img/foodimages/{}'.format(top_five[1][1])) }} "alt="Pic 2" style="width: 100%">
+                                <div class="carousel-caption">
+                                    <h3>{{ top_five[1][0] }}</h3>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img src="{{ url_for('static', filename='img/foodimages/{}'.format(top_five[2][1])) }} " alt="Pic 3" style="width: 100%">
+                                <div class="carousel-caption">
+                                    <h3>{{ top_five[2][0] }}</h3>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img src="{{ url_for('static', filename='img/foodimages/{}'.format(top_five[3][1])) }} " alt="Pic 4" style="width: 100%" >
+                                <div class="carousel-caption">
+                                    <h3>{{ top_five[3][0] }}</h3>
+                                </div>
+                            </div>
+                            <div class="item">
+                                <img src="{{ url_for('static', filename='img/foodimages/{}'.format(top_five[4][1])) }} " alt="Pic 5" style="width: 100%" >
+                                <div class="carousel-caption">
+                                    <h3>{{ top_five[4][0] }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <!-- Left and right controls-->
+                        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                 </div>
+            </header>
+    </body>
+</html>

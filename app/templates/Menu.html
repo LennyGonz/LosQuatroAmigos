@@ -1,0 +1,166 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+Menu
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='signup.css')}}">
+
+    <!-- Font link  -->
+<link href="https://fonts.googleapis.com/css?family=Allerta+Stencil" rel="stylesheet">
+
+    <!-- Styling code -->
+    <style>
+    {#  Using FontAwesome for heart icons #}
+    body
+    {
+        background-color: mistyrose;
+    }
+    .menu_item
+    {
+        border-right: groove;
+        border-left: groove;
+        border-top: groove;
+        border-bottom: groove;
+    }
+     @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
+     input[type="text"]
+     {
+       width: 50px;
+       background-color: #f2dede;
+     }
+    p{
+        font-family: "Allerta Stencil";
+        font-size: 14px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 300;
+        line-height: 16px;
+    }
+    h1{
+        font-family: "Allerta Stencil";
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 700;
+        line-height: 16px;
+    }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+
+
+    <!-- if the items == 0 and the sum of total for items in the shopping cart is 0 -->
+    {% if sum_of_items == 0 %}
+        <h1> Cart is Empty </h1>
+
+    <!-- then display that the cart is empty -->
+    {% else %}
+
+        <h1 style="margin-bottom: 25px"> <i class="fa fa-shopping-cart" aria-hidden="true">Shopping Cart</i> </h1>
+    <div class="container-fluid">
+
+        <form method="post" action="/menu">
+
+            <div class="row">
+
+                  <div class="col-md-4">
+                    <!-- databaseitems is a dictionary in python, in -->
+                    {% for item in cart %}
+                        <p>{{ item[3] }}</p>            <p>quantity: {{ item[4] }}</p>
+
+                   {% endfor %}
+                  </div>
+
+
+                    <!--<div class="col-md-4">-->
+                        <!--{% for items in cart %}-->
+                          <!--{#  {% if sum_of_items == 0 %} #}-->
+                                <!--{#DON'T RENDER THIS FOOD BECAUSE SUBTOTAL FOR IT IS ZERO  #}-->
+                           <!--{#  {% else %} #}-->
+                                <!--<p>Total Price for this Item: ${# {{ total[loop.index] }} #} </p>-->
+                           <!--{# {% endif %} #}-->
+                        <!--{% endfor %}-->
+                    <!--</div>-->
+            </div>
+                <h1> Total Price</h1>
+                <h2>${{ sum_of_items }}</h2>
+            <button type="button" ><a href="{{ url_for('empty_cart') }}">Empty Cart </a></button>
+            <button type="button" ><a href="{{ url_for('checkout', price=sum_of_items, order_items=cart ) }}">Checkout </a></button>        </form>
+    </div>
+    {% endif %}
+<br>
+    <h1 style="font-size: 61px; text-align: center"; margin-bottom="15px"> Menu </h1>
+    <br>
+    <div class="row">
+                    <div class="col-md-12">
+                        <nav class="navbar navbar-default" role="navigation">
+                            <div class="navbar-header">
+
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                     <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                                </button> <a class="navbar-brand" href="#">LQA</a>
+                            </div>
+
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                                <ul class="nav navbar-nav">
+                                    <li>
+                                        <a href="{{ url_for('index') }}">HOME</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ url_for('relogin')}}">YOUR PAGE</a>
+                                    </li>
+
+
+                                    <li>
+                                        <form class="navbar-form navbar-left" role="search" action= {{url_for('logout')}} >
+                                            <!-- <div class="form-group">
+                                                <input type="text" class="form-control">
+                                             </div> -->
+                                            <button type="submit" class="btn btn-default">
+                                                Sign Out
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+<br>
+
+    <!-- This form creates the menu and everything between the div is the actual menu  -->
+    <form method="post" action="{{ url_for('add_to_cart') }}">
+
+    <!-- This is where it's supposed to iterate through our menu, we display each image of the food, with its price and rating -->
+    <div>
+             {% for item in menu_items %}
+                <div class="col-md-3" >
+                    <div style="border-radius: 25px; margin-top: 5px; border-top: groove; border-left: groove; border-right: groove; border-bottom:groove">
+                        <p style="font-size: 20px; text-align: center"><strong>{{ item[3] }}</strong></p>
+
+                        <img src="{{ url_for('static', filename='img/foodimages/{}'.format(item[1])) }} " height="200" width="100%" style="user-select: none">
+                        <p>{{ item_description[0][0] }}</p>
+                            {% for number in range(0, item[5]| int) %}
+                                   <i class="fa fa-heart" aria-hidden="true"></i>
+                            {% endfor %}
+                        <p> Rating: {{ item[5]}}</p>
+                        <p> Price: ${{ item[4] }} </p>
+                        <input type="hidden" name="user_id" value="{{user_id}}" >
+                        <p> enter quantity <input type="number" name="quantity" min="0"> </p>
+                    </div>
+               </div>
+            {% endfor %}
+
+    </div>
+        <input type="submit" value="Add To Cart" style="width: 100%; height: 45px; background-color: #f2dede; border-color: black">
+    </form>
+
+    <br>
+
+{% endblock %}
+

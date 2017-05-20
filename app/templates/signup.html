@@ -1,0 +1,71 @@
+<!-- Link The Base Html here with Extends -->
+
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>Sign in and Sign up  </title>
+
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300,600'>
+
+    <!-- <link rel="stylesheet" href="../static/style.css"> -->
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+
+<script src="../static/createaccount.js"></script> <!--- connects to the global javascript file -- called createaccount-- --placed inside the javascript folder-- --->
+
+</head>
+
+<body>
+
+
+<div class="cont_principal">
+    <div class="cont_centrar">
+             {% block body %}
+                {% if session['logged_in'] %}
+                    <p>You're logged in already!</p>
+                {% else %}
+         {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <b>{{ message }} </b>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                {% endif %}
+            {% endblock %}
+                    <form action="/signup/" method="POST">
+                        <div class="cont_tabs_login">
+                            <ul class='ul_tabs'>
+                                <li class="active"><a href="#" >SIGN UP</a>
+                                    <span class="linea_bajo_nom"></span>
+                                </li>
+                                <li><a href="/showLogIn">LOG IN</a><span class="linea_bajo_nom"></span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="cont_text_inputs">
+                            <input type="text" class="input_form_sign d_block active_inp" placeholder="*FirstName" name="first_name" autocomplete="off"/>
+                            <input type="text" class="input_form_sign d_block active_inp" placeholder="*LastName" name="last_name" autocomplete="off"/>
+                            <input type="text" class="input_form_sign d_block active_inp" placeholder="*Username" name="user_name" autocomplete="off"/>
+                            <input type="password" class="input_form_sign d_block active_inp" placeholder="*Password" name="password" autocomplete="off" />
+                            <input type="text" class="input_form_sign d_block active_inp" placeholder="*Address" name="address" autocomplete="off"/>
+                            <input type="text" class="input_form_sign d_block active_inp" placeholder="*City" name="city" autocomplete="off"/>
+                            <input type="text" class="input_form_sign d_block active_inp" placeholder="*State" name="state" maxlenth="2" autocomplete="off"/>
+                            <input type="text" class="input_form_sign d_block active_inp" placeholder="*Postal" name="postal" autocomplete="off"/>
+                            <input type="text" class="input_form_sign d_block active_inp" placeholder="Apt" name="apt" autocomplete="off"/>
+                            <input type="text" class="input_form_sign d_block active_inp" placeholder="Phone Number" name="phone" autocomplete="off" />
+                            <!-- <a href="#" class="link_forgot_pass d_block" >Forgot Password ?</a> -->
+                            <div class="terms_and_cons d_none">
+           <!--             <p><input type="checkbox" name="terms_and_cons" /> <label for="terms_and_cons">Accept  Terms and Conditions.</label></p> -->
+                            </div>
+                        </div>
+                        <div class="cont_btn">
+                            <button class="btn_sign" type="submit" value="Sign Up">SIGN UP</button>
+                        </div>
+                    </form>
+
+    </div>
+</div>
+
+</body>
+</html>

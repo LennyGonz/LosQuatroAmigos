@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <title> Los Quatro Amigos </title>
+
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='font-awesome-4.7.0/css/font-awesome.min.css') }}">
+
+
+        <style>
+        body
+        {
+            background-color: #F5F0EC;
+        }
+        table
+        {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th
+        {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even)
+        {
+            background-color: #dddddd;
+        }
+        </style>
+
+        <!-- For Toggling the iFrame -->
+        <script>
+        function hideDIV(id) {
+            var x = document.getElementById(id);
+            if (x.style.display === 'none') {
+                x.style.display = 'block';
+            } else {
+                x.style.display = 'none';
+            }
+        }
+        </script>
+
+
+    </head>
+
+    <body>
+
+<header id="#top"></header>
+     <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="page-header">
+				<h1>
+					Los Quatro Amigos <br> <small> Deliverer Account - {{ session["user"] }} </small>
+				</h1>
+			</div>
+
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="navbar-header">
+
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+					</button> <a class="navbar-brand" href="#">LQA</a>
+				</div>
+
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li>
+							<a href="{{ url_for('index') }}">Home</a>
+						</li>
+                        <li><a href="#incompleteorders">Orders Requiring Action</a></li>
+                        <li><a href="#completedorders">Completed Orders</a></li>
+
+					</ul>
+					<form class="navbar-form navbar-left" role="search" action={{ url_for('logout') }}>
+						<button type="submit" class="btn btn-default">
+							Sign Out
+						</button>
+					</form>
+				</div>
+
+			</nav>
+		</div>
+	</div>
+     <div align="center">
+                        {% with messages = get_flashed_messages() %}
+    {% if messages %}
+                 {% for message in messages %}
+                     <b>{{ message }} </b>
+                 {% endfor %}
+             {% endif %}
+         {% endwith %}</div>
+     <header id="incompleteorders">
+       <table>
+           <h3> Orders Requiring Action: </h3>
+              <tr>
+                <th> Order ID </th>
+                <th> Customer Name </th>
+                <th> Customer's Phone Number </th>
+                <th> Customer's Address </th>
+                  <th> Action Fulfilled </th>
+                  <th> View Route </th>
+                  <th> Route </th>
+              </tr>
+           {% if all_delivery|length == 0 %}
+
+                   {# find user #}
+
+
+                   <!-- No Pending Orders -->
+               <td colspan="7" > Nothing to Action </td>
+           {% else %}
+               {% for order in all_delivery %}
+                   <tr>
+                  <!-- Pending Orders -->
+                      {# orderID #}
+                      <td> {{ order[0] }}</td>
+                      {# customer name #}
+                      <td> {% for user in all_users %}
+                          {% if user[0] == order[2]  %}
+                              {{ user[1] }} {{ user[2] }}
+                         </td>
+                      {# customer phone number #}
+                      <td>
+                              {{ user[11] }}
+                          </td>
+                      {# customer address #}
+                      <td>
+                              {{ user[4] }}, {{ user[5] }}, {{ user[6] }} {{ user[7] }}. {{ user[8] }}
+                          </td>
+
+                      {# click to fulfill  #}
+                      <td> <form action="{{ url_for('fulfill', order_num = order[0]) }}"><button type="submit">
+                          Fulfilled
+                      </button></form></td>
+
+                      {# click to view route #}
+                      <td> <button onclick="hideDIV('{{ order[0] }}')" type="submit" >
+							View Route </button> </td>
+                      {# ze map #}
+                      <td> <iframe id="{{ order[0] }}" style=' background: transparent; width: 100%; height:100%; display:none'
+                                   src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyAgKmyYkCOortTy41gPshpZtjQ3TDK4P8s
+                                    &origin=160+Covenant+Avenue
+                                    &destination=
+                              {{ user[10] }}+{{ user[9] }}
+
+                          {% endif %} {% endfor %}">
+
+                      </iframe> </td>  </tr>
+
+               {% endfor %}
+  {% endif %}
+
+
+       </table></header>
+     <div align="right"> <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a></div>
+
+     <header id="completedorders">
+
+         <table>
+           <h3>Completed Orders:</h3>
+              <tr>
+                <th> Order ID </th>
+                <th> Customer Name </th>
+                <th> Customer's Phone Number </th>
+                <th> Customer's Address </th>
+                  <th> Completed By</th>
+                <th> Issue Warning </th>
+              </tr>
+
+
+
+
+
+                   <!-- No Pending Orders -->
+                  {% if not all_compl_delivery %}
+                      <td colspan="6" > No Completed Delivery </td>
+                  {% else %}
+                       {% for items in all_compl_delivery %} <tr>
+                  <!-- Pending Orders -->
+                      {# orderID #}
+                      <td> {{ items[0] }}</td>
+                      {# customer name #}
+                      <td> {% for user in all_users %}
+                          {% if user[0] == items[2]  %}
+                              {{ user[1] }} {{ user[2] }}
+                         </td>
+                      {# customer phone number #}
+                      <td>
+                              {{ user[11] }}
+                          </td>
+                      {# customer address #}
+                      <td>
+                              {{ user[4] }}, {{ user[5] }}, {{ user[6] }} {{ user[7] }}. {{ user[8] }}
+                          </td>
+
+
+
+
+                   {# find user #}
+                   <!-- No Completed Deliveries-->
+
+
+                   <!-- Completed Deliveries -->
+
+                  <td> {{ items[1] }} </td>
+                <td> {% if session.get('user') == items[1] %}
+                        {% if items[4] == '1' %}
+                            Warning Already Issued
+                        {% else %}
+                            <form action="{{ url_for('issue_warning', order_num = items[0] ) }}"><button type="submit" class="btn btn-default">
+							Issue Warning
+                            </button></form>{% endif %} {% endif %}</td>
+                          {% endif %}
+                      {% endfor %}
+                      {% endfor %}
+                {% endif %}
+              </tr>
+
+            </table>
+     </header>
+		</div>
+
+<div align="right"> <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a></div>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+<!-- 404 Error Page -->
+<!-- Author: Chin -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='font-awesome-4.7.0/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+</head>
+<body>
+
+    <div class="inner">
+        <div style="text-align: center">
+            <img src="{{ url_for('static', filename='img/404taco.gif') }}" style="width: 20%; height: 20%">
+            <h1> 404 Error </h1>
+            <h3> The page you're looking for doesn't exist </h3>
+            <hr class = "intro-divider" width="50%">
+            <a href="{{url_for('index')}}" class="btn btn-info" role="button">
+                 <i class="fa fa-home"></i>
+                Home
+            </a>
+    </div>
+</body>
+</html>

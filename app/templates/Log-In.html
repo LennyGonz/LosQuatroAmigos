@@ -1,0 +1,66 @@
+<!-- Link The Base Html here with Extends -->
+
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>Sign in and Sign up  </title>
+
+    <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300,600'>
+
+    <!-- <link rel="stylesheet" href="../static/style.css"> -->
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+
+<!-- <script src="../static/createaccount.js"></script>--> <!--- connects to the global javascript file -- called createaccount-- --placed inside the javascript folder-- --->
+
+</head>
+
+<body>
+
+
+<div class="cont_principal">
+    <div class="cont_centrar">
+          {% block body %}
+                {% if session['logged_in'] %}
+                    <p>You're logged in already!</p>
+                {% else %}
+         {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <b>{{ message }} </b>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                {% endif %}
+            {% endblock %}
+                    <form action="/login" method="POST">
+                        <div class="cont_tabs_login">
+                            <ul class='ul_tabs'>
+                                <li class="active"><a href="#" onclick="sign_in()">LOG IN</a>
+                                    <span class="linea_bajo_nom"></span>
+                                </li>
+                                <li><a href="/showSignUp" onclick="sign_up()">SIGN UP</a><span class="linea_bajo_nom"></span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="cont_text_inputs">
+                            <input type="text" class="input_form_sign " placeholder="Name" name="name_us" />
+                            <input type="username" class="input_form_sign d_block active_inp" name="username"  placeholder="Username">
+                            <input type="password" class="input_form_sign d_block active_inp" name="password" placeholder="Password">
+                            <!-- <a href="#" class="link_forgot_pass d_block" >Forgot Password ?</a> -->
+                            <div class="terms_and_cons d_none">
+                        <p><input type="checkbox" name="terms_and_cons" /> <label for="terms_and_cons">Accept Terms and Conditions.</label></p>
+                            </div>
+                        </div>
+                        <div class="cont_btn">
+                            <button class="btn_sign" type="submit" value="Log In">LOG IN</button>
+                        </div>
+                    </form>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

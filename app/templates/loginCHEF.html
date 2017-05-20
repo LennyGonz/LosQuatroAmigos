@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Chef Page</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <style type="text/css">
+
+        body
+        {
+            background-color: #F5F0EC;
+        }
+             table
+        {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th
+        {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even)
+        {
+            background-color: #dddddd;
+        }
+
+
+
+
+        </style>
+
+        <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+             <head><strong>Welcome chef {{chef[0]}}!</strong></head>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+            <ul class="nav navbar-nav">
+                <li><button type ="submit" class = "btn btn-default"><a href="{{ url_for('index') }}">Home</a></button></li>
+            <li><form class="navbar-form navbar-left" role="search" action={{ url_for('logout') }}>
+						<button type="submit" class="btn btn-default">
+							Sign Out
+						</button>
+					</form></li>
+                </ul>
+		</div>
+</div>
+	<div class="row">
+		<div class="col-md-12">
+		</div>
+        <table>
+            <tr>
+                <th> Menu Items </th>
+                <th> Item Price </th>
+                <th> Item Rating</th>
+            </tr>
+
+            {%for items in menu_info %}
+    <form action= "{{url_for('editMenu', curr_item = items[0],curr_price=items[1]) }}" method = "POST">
+         <tr>
+                <th>
+                    <input type="text" name="_menu" value = "{{items[0]}}"/>
+
+                    <input type ="submit" value="Save"> </input>
+
+                    <button type ="button" value="delete"><a href ="{{url_for('delete_menu_item', item_name = items[0]) }}">delete</a></button>
+
+                </th>
+                <th><input type = "decimal" name ="price" value = "{{items[1]}}">
+                    <input type ="submit" value="save"> </input>
+                </th>
+
+                <th>{{items[2]}}</th>
+        </tr>
+
+
+    </form>
+            {% endfor %}
+            </table>
+	    </div>
+</div>
+        <div>
+            <table>
+              <form action ="{{url_for('add_menu_item',chef = chef[0]) }}" method = 'POST'>
+                  <tr>
+                      <td>
+                            <p>Add new Item
+                            <input type="text" name ="new_item"> </input>
+                                Add Price
+                                <input type="text" name ="new_price"></input>
+                                Add Description
+                                <input type="text" name ="description"></input>
+
+                                </p>
+                      </td>
+
+                      <th>
+                          <input type="submit" value="Add new Item"> </input>
+
+                      </th>
+
+
+                  </tr>
+
+                </form>
+
+                </table>
+
+        </div>
+    </head>
+
+
+
+
+
+
+</html>

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <title> Los Quatro Amigos </title>
+
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='font-awesome-4.7.0/css/font-awesome.min.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Inknut+Antiqua" rel="stylesheet">
+      <style type="text/css">
+          body
+          {
+              background-color: #F5F0EC;
+          }
+          h1
+          {
+              font-family: 'Inkut Antiqua', Serif;
+          }
+          p
+          {
+              font-family: 'Inkut Antiqua', Serif;
+          }
+
+
+      </style>
+
+  </head>
+  <body>
+
+    <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="page-header">
+				<h1>
+					Los Quatro Amigos <br> <small> Manager Account </small>
+				</h1>
+			</div>
+			<nav class="navbar navbar-default" role="navigation">
+				<div class="navbar-header">
+
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+						 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+					</button> <a class="navbar-brand" href="#">LQA</a>
+				</div>
+
+				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav">
+						<li class="active">
+							<a href="{{ url_for('index') }}">Home</a>
+						</li>
+
+					</ul>
+					<form class="navbar-form navbar-left" role="search" action="{{ url_for('logout') }}">
+						<button type="submit" class="btn btn-default">
+							Sign Out
+						</button>
+					</form>
+				</div>
+			</nav>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+            <h4> <strong style="text-decoration: underline"> User Requests </strong> </h4>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>
+							Request #
+						</th>
+						<th>
+							User Name
+						</th>
+						<th>
+							Payment Taken
+						</th>
+						<th>
+							Status
+						</th>
+                        <th>
+                            Decision
+                        </th>
+					</tr>
+				</thead>
+				<tbody>
+                {% for accept_user in unregistered %}
+                <tr>
+                    <td>
+                         {{ loop.index }}
+                    </td>
+                    <td>
+                        {{ accept_user[1] }}
+
+                    </td>
+
+                    <td>
+                        Pending
+                    </td>
+                    <td>
+                        <button type="button" ><a href="{{ url_for('accept_user', user=accept_user[0] ) }}">Accept </a></button>
+                        <button type="button" ><a href="{{ url_for('decline_user', user=accept_user[0] ) }}">Decline </a></button>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+        <h4> <strong style="text-decoration: underline"> Job Requests </strong> </h4>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>
+							Request #
+						</th>
+						<th>
+							User Name
+						</th>
+						<th>
+							Payment Taken
+						</th>
+						<th>
+							Status
+						</th>
+                        <th>
+                            Decision
+                        </th>
+					</tr>
+				</thead>
+				<tbody>
+                    {% for unhired_employee in unhired_employees %}
+                    <tr>
+                        <td>
+                             {{ loop.index }}
+                        </td>
+                        <td>
+                            {{ unhired_employee[2] }} {{ unhired_employee[3] }}
+                        </td>
+                        <td>
+                            01/04/2012
+                        </td>
+                        <td>
+                            Pending
+                        </td>
+                        <td>
+                            <button type="button" ><a href="{{ url_for('hire', empl_name=unhired_employee[0]) }}">Hire </a></button>
+
+                        </td>
+                    </tr>
+                 {% endfor %}
+                </tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+        <h4> <strong style="text-decoration: underline"> Registered Users </strong> </h4>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>
+							User #
+						</th>
+						<th>
+							Member Since
+						</th>
+						<th>
+                            Membership Type
+						</th>
+						<th>
+							Action
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+                     {% for registered_user in registered_users %}
+                        <tr>
+                            <td>
+                                 {{ loop.index }}
+                            </td>
+                            <td>
+                                {{ registered_user[1] }} {{ registered_user[2] }}
+                            </td>
+                            <td>
+                                01/04/2012
+                            </td>
+                            <td>
+
+                                {% if registered_user[16] == "1" %}
+                                    VIP
+                                {% else %}
+                                    Normal Customer
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                <button type="button" ><a href="{{ url_for('upgrade', user_id=registered_user[0]) }}">Upgrade_VIP </a></button>
+                                <button type="button" ><a href="{{ url_for('downgrade', user_id=registered_user[0]) }}">Downgrade_VIP </a></button>
+                                <button type="button" ><a href="{{ url_for('deregister', user_id=registered_user[0]) }}">Delete Account </a></button>
+                            </td>
+                        </tr>
+                     {% endfor %}
+                    </tbody>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+         <h4> <strong style="text-decoration: underline"> Current Employees </strong> </h4>
+			<table class="table">
+					<thead>
+						<tr>
+							<th>
+								User #
+							</th>
+							<th>
+								User
+							</th>
+							<th>
+								Salary
+							</th>
+							<th>
+								Employee ID
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+                      {% for employees in hired_employees %}
+                      <tr>
+                      <td>
+                      {{ loop.index }}
+                      </td>
+                      <td>
+                      {{employees[2]}} {{employees[3]}}
+                      </td>
+                      <td>
+                      ${{employees[12]}}
+                      </td>
+                      <td>
+                      {{employees[0]}}
+                      </td>
+                     
+                      <td>
+                      <button type="button" ><a href="{{ url_for('promote', empl_name=employees[0]) }}"> Promote </a></button>
+                      <button type="button" ><a href="{{ url_for('demote', empl_name=employees[0]) }}"> Demote </a></button>
+                      <button type="button" ><a href="{{ url_for('fire', empl_name=employees[0]) }}"> Fire </a></button>
+                      </td>
+                      </tr>
+                     {% endfor %}
+                    </tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+        <div class="row">
+		<div class="col-md-12">
+        <h4> <strong style="text-decoration: underline"> Complaints Section </strong> </h4>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>
+							Complaint #
+						</th>
+						<th>
+							Complaintant
+						</th>
+						<th>
+							Complaint Towards Emp_ID
+						</th>
+						<th>
+							Complaint
+						</th>
+                        <th>
+                            Decision
+                        </th>
+					</tr>
+				</thead>
+				<tbody>
+                    {% for complaint in complaints %}
+                    <tr>
+                        <td>
+                             {{ loop.index }}
+                        </td>
+                        <td>
+                            {{ complaint[1] }}
+                        </td>
+                        <td>
+                            {{ complaint[2] }}
+                        </td>
+                        <td>
+                            {{ complaint[3] }}
+                        </td>
+                        <td>
+                            <button type="button" ><a href="{{ url_for('accept_complaint', complaint_id=complaint[0], emp_id=complaint[2]) }}"> Accept </a></button>
+                            <button type="button" ><a href="{{ url_for('decline_complaint',  complaint_id=complaint[0] , user_id=complaint[2]) }}"> Decline </a></button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+			</table>
+		</div>
+	</div>
+
+    <div class="row">
+		<div class="col-md-12">
+        <h4> <strong style="text-decoration: underline"> Compliments Section </strong> </h4>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>
+							Compliment #
+						</th>
+						<th>
+							User
+						</th>
+						<th>
+							Compliment Towards
+						</th>
+						<th>
+							Compliment
+						</th>
+                        <th>
+                            Decision
+                        </th>
+					</tr>
+				</thead>
+				<tbody>
+                    {% for compliment in compliments %}
+                    <tr>
+                        <td>
+                             {{ loop.index }}
+                        </td>
+                        <td>
+                            {{ compliment[1] }}
+                        </td>
+                        <td>
+                            {{ compliment[2] }}
+                        </td>
+                        <td>
+                            {{ compliment[3] }}
+                        </td>
+                        <td>
+                            <button type="button" ><a href="{{ url_for('accept_compliment', compliment_id=compliment[0], emp_id=compliment[2]) }}"> Accept </a></button>
+                            <button type="button" ><a href="{{ url_for('decline_compliment',  compliment_id=compliment[0] , user_id=compliment[2]) }}"> Decline </a></button>                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+			</table>
+		</div>
+	</div>
+
+
+
+
+
+
+
+  </body>
+</html>

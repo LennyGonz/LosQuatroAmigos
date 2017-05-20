@@ -1,0 +1,31 @@
+
+{% if session['logged_in'] == True %}
+<body>
+<form action="{{ url_for('submit_compliment') }}" method="POST">
+
+    <h6> List of employees</h6>
+    {% for employee in employees %}
+    <p>{{ loop.index }} {{ employee[2]}} {{employee[3]}}</p>
+    {% endfor %}
+
+    <br /><textarea name="employee" cols="35" rows="1">Enter the name of the employee.
+    </textarea>
+
+
+
+
+    <br />
+  <textarea name="compliment" cols="50" rows="5">
+  Enter your compliment
+  </textarea><br />
+  <input type="submit" value="Submit compliment">
+</form>
+
+{% else %}
+
+{% print(session['logged_in']) %}
+<p>You need to log in to do that!</p>
+{% endif %}
+
+
+</body>
